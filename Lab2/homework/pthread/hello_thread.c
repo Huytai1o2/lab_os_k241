@@ -25,9 +25,9 @@ int main(int argc, char *argv[])
     pthread_create(&tid1, NULL, &f_count, "1");
     pthread_create(&tid2, NULL, &f_count, "2");
 
-    // // // wait for the threads to finish
-    // pthread_join(tid1, NULL);
-    // pthread_join(tid2, NULL);
+    // // wait for the threads to finish
+    pthread_join(tid1, NULL);
+    pthread_join(tid2, NULL);
 
     getc(stdin);
 
