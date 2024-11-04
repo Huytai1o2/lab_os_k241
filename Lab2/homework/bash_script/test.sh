@@ -28,6 +28,8 @@ for i in ${!myArr[@]}; do
 done
 
 #read 2 integer
+read -p "Enter" x
+
 echo "Enter x: "
 read x
 echo "Enter y: "
