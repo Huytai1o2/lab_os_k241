@@ -1,32 +1,59 @@
+#include <fcntl.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
 
 int snd(char *command);
 int rcv();
 
-int main(int argc, char *argv[])
+
+
+int main(int argc, char *argv[], char *envp[])
 {
-    if (argc != 2)
+    char *msg = malloc(100*sizeof(char));
+    char *filepath = malloc(100*sizeof(char));
+    int i = 0;
+    int fd;
+
+    
+
+
+
+    while(i < argc){
+
+    if (strcmp(argv[i], "-r")==0)
     {
-        printf("Usage: %s <message>\n", argv[0]);
-        return 1;
+        if (strcmp(filepath, "") == 0)
+        {
+            printf("Missing file_path");
+            return -1;
+        }
+        fd = open(filepath, O_RDONLY);
+        read(fd, msg, 100);
+        printf("%s\n", msg);
     }
 
-    if (strcmp(argv[1], "snd") == 0)
+    else if (strcmp(argv[i], "-w") ==0)
     {
-        char message[100];
-        printf("Enter your message: ");
-        fgets(message, sizeof(message), stdin);
-        return snd(message);
+        i++;
+        strcpy(msg, argv[i]);
+        if (strcmp(filepath, "") == 0)
+        {
+            printf("Missing file_path");
+            return -1;
+        }
+        fd = open(filepath, O_WRONLY);
+        write(fd, msg, 100);
     }
-    else if (strcmp(argv[1], "rcv") == 0)
+
+    else if (strcmp(argv[i], "-filepath")==0)
     {
-        return rcv();
+        i++;
+        strcpy(filepath, argv[i]);
     }
-    else
-    {
-        printf("Invalid command\n");
-        return 1;
+
+    i++;
     }
-    return 0;
 }

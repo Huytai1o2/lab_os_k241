@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int snd(char *command)
+int snd(char *command, char *fifo_path)
 {
     const char *fifo_path = "abc_fifo_name";
     char message[100];
